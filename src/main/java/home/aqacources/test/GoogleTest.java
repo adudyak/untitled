@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
@@ -49,7 +50,8 @@ public class GoogleTest {
         String googleSearchButton = "(//input[@class='gNO89b'])[2]";
         String googleSearchInputField = "q";
         String searchText = "Automation testing";
-        String automationTestingLink = "//a[@href = 'https://www.qasymphony.com/blog/test-automation-automated-testing/']";
+        String automationTestingLink = "//a[contains(@href, 'qasymphony.com')]//span[contains(text(), 'Test Automation vs. Automated Testing: The Difference ...')]";
+        String nextPageLink = "//a[@id='pnnext']/span[last()]";
 
         // Open Google
         driver.get("https://google.com.ua");
@@ -59,8 +61,12 @@ public class GoogleTest {
 
         // Click Search
         driver.findElement(By.xpath(googleSearchButton)).click();
-
-        // Click Automation Testing
+        // Look and click Automation Testing
+        //driver.findElement(By.xpath(automationTestingLink)).click();
+        for (int i = 1; !(driver.findElements(By.xpath(automationTestingLink)).size() != 0) && i < 5; i++) {
+            System.out.println("N/a to find link on page: " + i + ". Going to next page.");
+            driver.findElement(By.xpath(nextPageLink)).click();
+        }
         if (driver.findElements(By.xpath(automationTestingLink)).size() != 0) driver.findElement(By.xpath(automationTestingLink)).click();
         else TestCase.fail("Not able to find Automation Testing link");
 
