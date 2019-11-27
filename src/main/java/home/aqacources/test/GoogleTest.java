@@ -47,7 +47,7 @@ public class GoogleTest {
      */
     @Test
     public void testOpenGoogleTest() {
-        String googleSearchButton = "(//input[@class='gNO89b'])[2]";
+        String googleSearchButton = "//div[@jsname]//input[@name='btnK']";
         String googleSearchInputField = "q";
         String searchText = "Automation testing";
         String automationTestingLink = "//a[contains(@href, 'qasymphony.com')]//span[contains(text(), 'Test Automation vs. Automated Testing: The Difference ...')]";
@@ -62,7 +62,6 @@ public class GoogleTest {
         // Click Search
         driver.findElement(By.xpath(googleSearchButton)).click();
         // Look and click Automation Testing
-        //driver.findElement(By.xpath(automationTestingLink)).click();
         for (int i = 1; !(driver.findElements(By.xpath(automationTestingLink)).size() != 0) && i < 5; i++) {
             System.out.println("N/a to find link on page: " + i + ". Going to next page.");
             driver.findElement(By.xpath(nextPageLink)).click();
@@ -71,8 +70,8 @@ public class GoogleTest {
         else TestCase.fail("Not able to find Automation Testing link");
 
         // Verify page
-        String title = driver.findElement(By.xpath("(//title)[1]")).getText();
-        Assert.assertSame("Test Automation vs. Automated Testing: The Difference Matters - QASymphony", title);
+        String title = driver.findElement(By.xpath("(//title)[1]")).getAttribute("innerHTML");
+        Assert.assertEquals("Test Automation vs. Automated Testing: The Difference Matters - QASymphony", title);
     }
 
     /**
